@@ -64,7 +64,7 @@ Polinom Polinom::operator+(Polinom const &p)
     Polinom x;
     x.size = max(size, p.size);
     x.elmt = new double[x.size];
-    begins = clock();
+    x.begins = clock();
     for (int i = 0; i < x.size; i++)
     {
         if (i > size)
@@ -75,7 +75,7 @@ Polinom Polinom::operator+(Polinom const &p)
             x.elmt[i] = elmt[i] + p.elmt[i];
         x.numplusminus++;
     }
-    ends = clock();
+    x.ends = clock();
     int k = x.size;
     while (k >= 1 && x.elmt[k - 1] == 0)
     {
@@ -91,7 +91,7 @@ Polinom Polinom::operator-(Polinom const &p)
     Polinom x;
     x.size = max(size, p.size);
     x.elmt = new double[x.size];
-    begins = clock();
+    x.begins = clock();
     for (int i = 0; i < x.size; i++)
     {
         if (i > size)
@@ -102,7 +102,7 @@ Polinom Polinom::operator-(Polinom const &p)
             x.elmt[i] = elmt[i] - p.elmt[i];
         x.numplusminus++;
     }
-    ends = clock();
+    x.ends = clock();
     int k = x.size;
     while (k >= 1 && x.elmt[k - 1] == 0)
     {

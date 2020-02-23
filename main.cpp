@@ -19,17 +19,30 @@ int randNum(int range, int cnt)
 
 void randPol(Polinom &p, Polinom &q, int size1, int size2, int type)
 {
+    freopen("arrayRand.txt", "w", stdout);
+    cout << size1 << ' ' << size2 << endl;
     if (type == 1)
     {
         PolinomNaive temp1(size1), temp2(size2);
         for (int i = 0; i < size2; i++)
+        {
             temp1.setElmt(i, (double)randNum(100, i * i));
+            cout << temp1.getElmt(i) << ' ';
+        }
+        cout << endl;
         for (int i = 0; i < size2; i++)
+        {
             temp2.setElmt(i, (double)randNum(100, i * i));
+            cout << temp2.getElmt(i) << ' ';
+        }
+        cout << endl;
         p = temp1;
         q = temp2;
-        cout << "Polinom hasil generate:" << endl;
+        fclose(stdout);
+        cout << "Polinom 1 hasil generate:" << endl;
         p.printAll();
+        cout << "Polinom 2 hasil generate:" << endl;
+        q.printAll();
         cout << p.getSize() << endl;
     }
 
@@ -42,8 +55,10 @@ void randPol(Polinom &p, Polinom &q, int size1, int size2, int type)
             temp2.setElmt(i, (double)randNum(100, i * i));
         p = temp1;
         q = temp2;
-        cout << "Polinom hasil generate:" << endl;
+        cout << "Polinom 1 hasil generate:" << endl;
         p.printAll();
+        cout << "Polinom 2 hasil generate:" << endl;
+        q.printAll();
     }
 }
 
@@ -102,6 +117,7 @@ void multiplyPol(int t)
         Nres.printAll();
         Nres.printAll("resultNaive.txt");
         printf("Total Penjumlahan/Pengurangan: %d\n Total Perkalian: %d\n", Nres.getNumPlusMinus(), Nres.getNumProduct());
+        cout << "\nTotal Durasi Komputasi: " << fixed << Nres.getOpDuration() << setprecision(6) << " ms";
     }
     else if (t == 2)
     {
@@ -109,8 +125,8 @@ void multiplyPol(int t)
         Dres.printAll();
         Dres.printAll("resultDnC.txt");
         printf("Total Penjumlahan/Pengurangan: %d\n Total Perkalian: %d\n", Dres.getNumPlusMinus(), Dres.getNumProduct());
+        cout << "\nTotal Durasi Komputasi: " << fixed << Dres.getOpDuration() << setprecision(6) << " ms";
     }
-    cout << "\nTotal Durasi Komputasi: " << fixed << dur << setprecision(6) << " ms";
 }
 
 void sumSubstractPol(int t)
@@ -158,7 +174,7 @@ void sumSubstractPol(int t)
     Pres.printAll();
     Pres.printAll("resultPlusMinus.txt");
     printf("Total Penjumlahan/Pengurangan: %d\n Total Perkalian: %d\n", Pres.getNumPlusMinus(), Pres.getNumProduct());
-    cout << "\nTotal Durasi Komputasi: " << fixed << dur << setprecision(6) << " ms";
+    cout << "\nTotal Durasi Komputasi: " << fixed << Pres.getOpDuration() << setprecision(6) << " ms";
 }
 
 int menu(bool &lp)
