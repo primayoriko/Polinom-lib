@@ -8,57 +8,73 @@ const int MAX = 1e3 + 8;
 PolinomNaive aN, bN;
 PolinomDnC aD, bD;
 
-int randNum(int range, int cnt)
+int randNum(int range, int cnt, time_t *t)
 {
-    srand(time(0) - cnt);
+    srand(time(0) * time(t) * 1200 - cnt);
     int num = rand() % (2 * range);
     num -= range;
     //cout << num << endl;
     return num;
 }
 
-void randPol(Polinom &p, Polinom &q, int size1, int size2, int type)
+void randPol(Polinom *p, Polinom *q, int size1, int size2, int type)
 {
-    freopen("arrayRand.txt", "w", stdout);
+    freopen("polRand.txt", "w", stdout);
     cout << size1 << ' ' << size2 << endl;
     if (type == 1)
     {
         PolinomNaive temp1(size1), temp2(size2);
         for (int i = 0; i < size2; i++)
         {
-            temp1.setElmt(i, (double)randNum(100, i * i));
+            time_t tim = time(nullptr);
+            temp1.setElmt(i, (double)randNum(100, i * i * i, &tim));
             cout << temp1.getElmt(i) << ' ';
         }
         cout << endl;
-        for (int i = 0; i < size2; i++)
+        for (int i = size2 - 1; i >= 0; i--)
         {
-            temp2.setElmt(i, (double)randNum(100, i * i));
+            time_t tim = time(nullptr);
+            temp2.setElmt(i, (double)randNum(100, i * i, &tim));
             cout << temp2.getElmt(i) << ' ';
         }
-        cout << endl;
-        p = temp1;
-        q = temp2;
-        fclose(stdout);
+        //cout << "hashdash" << endl;
+        // PolinomNaive r = temp1;
+        *p = temp1;
+        *q = temp2;
+        //fclose(stdout);
+        //cout << "sadjas" << endl;
+        temp1.printAll();
         cout << "Polinom 1 hasil generate:" << endl;
-        p.printAll();
+        p->printAll();
         cout << "Polinom 2 hasil generate:" << endl;
-        q.printAll();
-        cout << p.getSize() << endl;
+        q->printAll();
+        cout << p->getSize() << endl;
     }
 
     else if (type == 2)
     {
         PolinomDnC temp1(size1), temp2(size2);
         for (int i = 0; i < size2; i++)
-            temp1.setElmt(i, (double)randNum(100, i * i));
-        for (int i = 0; i < size2; i++)
-            temp2.setElmt(i, (double)randNum(100, i * i));
-        p = temp1;
-        q = temp2;
+        {
+            time_t tim = time(nullptr);
+            temp1.setElmt(i, (double)randNum(100, i * i, &tim));
+            cout << temp1.getElmt(i) << ' ';
+        }
+        cout << endl;
+        for (int i = size2 - 1; i >= 0; i--)
+        {
+            time_t tim = time(nullptr);
+            temp2.setElmt(i, (double)randNum(100, i * i * i, &tim));
+            cout << temp2.getElmt(i) << ' ';
+        }
+        cout << endl;
+        *p = temp1;
+        *q = temp2;
+        cout << temp1.getSize() << ' ' << p->getSize() << endl;
         cout << "Polinom 1 hasil generate:" << endl;
-        p.printAll();
+        p->printAll();
         cout << "Polinom 2 hasil generate:" << endl;
-        q.printAll();
+        q->printAll();
     }
 }
 
@@ -68,9 +84,9 @@ void multiplyPol(int t)
     PolinomDnC D1, D2, Dres;
     int n1, n2, opsi;
     string s;
-    printf("Pilih metode input polinom:\n1. Generate random\n2. Dari file\n");
+    double k;
+    printf("Pilih metode input polinom:\n1. Generate random\n2. Dari file\n\nInput opsi: ");
     cin >> opsi;
-
     switch (opsi)
     {
     case 1:
@@ -79,29 +95,70 @@ void multiplyPol(int t)
         printf("Input derajat/orde polinom 2: ");
         cin >> n2;
         if (t = 1)
-            randPol(N1, N2, n1, n2, 1);
-        else
-            randPol(D1, D2, n1, n2, 2);
-        break;
-    case 2:
-        printf("Input nama file: ");
-        cin >> s;
-        freopen(s, "r", stdin);
-        cin >> n1 >> n2;
-        double arr1[n1], arr2[n2];
-        for (int i = 0; i < n1; i++)
-            cin >> arr1[i];
-        for (int i = 0; i < n2; i++)
-            cin >> arr2[i];
-        if (t == 1)
         {
-            N1.setElmt(n1, arr1);
-            N2.setElmt(n2, arr2);
+            N1.resizeElmt(n1);
+            N2.resizeElmt(n2);
+            randPol(&N1, &N2, n1, n2, 1);
         }
         else
         {
-            D1.setElmt(n1, arr1);
-            D2.setElmt(n2, arr2);
+            D1.resizeElmt(n1);
+            D2.resizeElmt(n2);
+            randPol(&D1, &D2, n1, n2, 2);
+        }
+        break;
+    case 2:
+        // printf("Input nama file: ");
+        // cin >> s;
+        freopen("polRand.txt", "r", stdin);
+        cin >> n1 >> n2;
+        if (t == 1)
+        {
+            N1.resizeElmt(n1);
+            N2.resizeElmt(n2);
+            for (int i = 0; i < n1; i++)
+            {
+                cin >> k;
+                N1.setElmt(i, k);
+            }
+            for (int i = 0; i < n2; i++)
+            {
+                cin >> k;
+                N2.setElmt(i, k);
+            }
+        }
+        else
+        {
+            D1.resizeElmt(n1);
+            D2.resizeElmt(n2);
+            for (int i = 0; i < n1; i++)
+            {
+                cin >> k;
+                D1.setElmt(i, k);
+            }
+            for (int i = 0; i < n2; i++)
+            {
+                cin >> k;
+                D2.setElmt(i, k);
+            }
+        }
+
+        for (int i = 0; i < n1; i++)
+        {
+            cin >> k;
+            if (t == 1)
+                N1.setElmt(i, k);
+            else
+                D1.setElmt(i, k);
+        }
+        for (int i = 0; i < n2; i++)
+        {
+            cin >> k;
+            cin >> k;
+            if (t == 1)
+                N2.setElmt(i, k);
+            else
+                D2.setElmt(i, k);
         }
         fclose(stdin);
         break;
@@ -134,7 +191,8 @@ void sumSubstractPol(int t)
     Polinom A, B, Pres;
     int n1, n2, opsi;
     string s;
-    printf("Pilih metode input polinom:\n1. Generate random\n2. Dari file\n");
+    double k;
+    printf("Pilih metode input polinom:\n1. Generate random\n2. Dari file\n\nInput opsi: ");
     cin >> opsi;
     switch (opsi)
     {
@@ -143,22 +201,27 @@ void sumSubstractPol(int t)
         cin >> n1;
         printf("Input derajat/orde polinom 2: ");
         cin >> n2;
-        randPol(A, B, n1, n2, 1);
+        A.resizeElmt(n1);
+        B.resizeElmt(n2);
+        randPol(&A, &B, n1, n2, 1);
         break;
     case 2:
-        printf("Input nama file: ");
-        cin >> s;
-        freopen(s, "r", stdin);
+        // printf("Input nama file: ");
+        // cin >> s;
+        freopen("polRand.txt", "r", stdin);
         cin >> n1 >> n2;
-        double arr1[n1], arr2[n2];
-
+        A.resizeElmt(n1);
+        B.resizeElmt(n2);
         for (int i = 0; i < n1; i++)
-            cin >> arr1[i];
+        {
+            cin >> k;
+            A.setElmt(i, k);
+        }
         for (int i = 0; i < n2; i++)
-            cin >> arr2[i];
-
-        A.setElmt(n1, arr1);
-        B.setElmt(n2, arr2);
+        {
+            cin >> k;
+            B.setElmt(i, k);
+        }
         fclose(stdin);
         break;
     default:

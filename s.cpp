@@ -18,12 +18,16 @@ int aaaa(vector<int> *p, int i)
 
 int main()
 {
-    vector<int> a;
-    a.resize(1000);
-    for (int i = 0; i < 1000; i++)
+
+    int a = 0;
+    if (!a)
     {
-        cout << a[i] << ' ';
+        freopen("sad.txt", "w", stdout);
+        cout << "sadsad";
+        cout << "sdad";
+        fclose(stdout);
     }
+    cout << 213213;
     //cout << b[0] << b[2] << b[5] << endl;
 }
 

@@ -49,12 +49,14 @@ Polinom::Polinom(Polinom const &p)
 
 Polinom::~Polinom()
 {
-    delete elmt;
+    if (size != 0)
+        delete[] elmt;
 }
 
 Polinom Polinom::operator=(Polinom const &p)
 {
-    delete[] elmt;
+    if (size != 0)
+        delete[] elmt;
     Polinom x(p);
     return x;
 }
@@ -82,6 +84,8 @@ Polinom Polinom::operator+(Polinom const &p)
         k--;
     }
     Polinom y(x.elmt, k);
+    y.begins = x.begins;
+    y.ends = x.ends;
     y.numplusminus = x.numplusminus;
     return y;
 }
@@ -109,6 +113,8 @@ Polinom Polinom::operator-(Polinom const &p)
         k--;
     }
     Polinom y(x.elmt, k);
+    y.begins = x.begins;
+    y.ends = x.ends;
     y.numplusminus = x.numplusminus;
     return y;
 }
@@ -148,6 +154,14 @@ double Polinom::getOpDuration()
     return (double)(ends - begins) / (double)CLOCKS_PER_SEC * (double)1000;
 }
 
+void Polinom::resizeElmt(int siz)
+{
+    // if (size != 0)
+    //     delete[] elmt;
+    elmt = new double[siz];
+    size = siz;
+}
+
 void Polinom::setElmt(int i, double x)
 {
     elmt[i] = x;
@@ -156,7 +170,8 @@ void Polinom::setElmt(int i, double x)
 void Polinom::setElmt(int siz, double *arr)
 {
     size = siz;
-    delete[] elmt;
+    if (size != 0)
+        delete[] elmt;
     elmt = new double[siz];
     for (int i = 0; i < siz; i++)
         elmt[i] = arr[i];

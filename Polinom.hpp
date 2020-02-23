@@ -24,6 +24,7 @@ public:
     int getNumProduct();
     double getOpDuration();
 
+    void resizeElmt(int);
     void setElmt(int, double);
     void setElmt(int, double *);
 
