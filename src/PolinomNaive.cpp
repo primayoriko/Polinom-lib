@@ -21,18 +21,15 @@ PolinomNaive PolinomNaive::operator*(PolinomNaive const &p)
     {
         for (int j = 0; j < p.size; j++)
         {
-            //cout << i << ' ' << j << endl;
             if (elmt[i] != 0 && p.elmt[j] != 0)
             {
                 x.numplusminus++;
                 x.numproduct++;
                 temp[i + j] += elmt[i] * p.elmt[j];
-                //cout << i << ' ' << j << ' ' << temp[i + j] << endl;
             }
         }
     }
     x.ends = clock();
-    //cout << sizeof(temp) / sizeof(double) << endl;
     int k = size + p.size - 1;
     while (k >= 1 && temp[k - 1] == 0)
     {

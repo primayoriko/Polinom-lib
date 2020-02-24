@@ -151,7 +151,7 @@ int Polinom::getNumProduct()
 
 double Polinom::getOpDuration()
 {
-    return (double)(ends - begins) / (double)CLOCKS_PER_SEC * (double)1000;
+    return (double)(ends - begins) / (double)CLOCKS_PER_SEC * (double)1e6;
 }
 
 void Polinom::resizeElmt(int siz)

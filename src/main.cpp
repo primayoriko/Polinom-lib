@@ -3,9 +3,6 @@
 #include "PolinomNaive.hpp"
 using namespace std;
 
-/*
-    Menu utama -> nanya gen random / operasi
-*/
 void mainMenu();
 
 void menuGenerator()
@@ -13,6 +10,7 @@ void menuGenerator()
     printf("Pilih orde/suku/derajat polinom yang akan di generate: ");
     int n, range = 100;
     cin >> n;
+    n++;
     if (!(n > 0))
     {
         printf("Input salah!!\n\n");
@@ -37,6 +35,7 @@ void menuGenerator()
     a.printAll();
     printf("\nPolinom hasil generate 2:\n");
     b.printAll();
+    printf("\nData Polinom berhasil disimpan di Pol.txt!\n");
 
     freopen("Pol.txt", "w", stdout);
     cout << n << endl;
@@ -62,6 +61,7 @@ void menuOperasi()
     else if (opsi2 == 2)
         printf("\nMasukkan orde/derajat: ");
     cin >> n;
+    n++;
     if (!(n > 0))
     {
         printf("Input salah!!\n\n");
@@ -93,11 +93,11 @@ void menuOperasi()
         printf("\nPolinom hasil DnC vers. Karatsuba:\n");
         Dres.printAll();
         printf("Jumlah perkalian: %d   |   Jumlah penjumlahan/pengurangan: %d\n", Dres.getNumProduct(), Dres.getNumPlusMinus());
-        printf("Waktu eksekusi : %.2f ms\n\n", Dres.getOpDuration());
+        printf("Waktu eksekusi : %.5f microseconds\n\n", Dres.getOpDuration());
         printf("Polinom hasil Brute Force:\n");
         Dres.printAll();
         printf("Jumlah perkalian: %d   |   Jumlah penjumlahan/pengurangan: %d\n", Nres.getNumProduct(), Nres.getNumPlusMinus());
-        printf("Waktu eksekusi : %.2f ms\n\n", Nres.getOpDuration());
+        printf("Waktu eksekusi : %.5f microseconds\n\n", Nres.getOpDuration());
 
         Dres.printAll("resDnC.txt");
         Nres.printAll("resNaive.txt");
@@ -121,14 +121,10 @@ void menuOperasi()
             fclose(stdin);
 
         Polinom Dres = (opsi == 2) ? (D1 + D2) : (D1 - D2);
-        // if (opsi == 2)
-        //     Dres = ;
-        // else
-        //     Dres = ;
         printf("\nPolinom hasil %s:\n", (opsi == 2) ? "Penjumlahan" : "Pengurangan");
         Dres.printAll();
         printf("Jumlah perkalian: %d   |   Jumlah penjumlahan/pengurangan: %d\n", Dres.getNumProduct(), Dres.getNumPlusMinus());
-        printf("Waktu eksekusi : %.2f ms\n\n", Dres.getOpDuration());
+        printf("Waktu eksekusi : %.5f microseconds\n\n", Dres.getOpDuration());
         Dres.printAll("resPlusMinus.txt");
     }
     else

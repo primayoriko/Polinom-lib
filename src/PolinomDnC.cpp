@@ -30,7 +30,6 @@ PolinomDnC PolinomDnC::operator*(PolinomDnC const &p)
     x.elmt = new double[x.size];
     for (int i = 0; i < x.size; i++)
         x.elmt[i] = ans[i];
-    //cout << x.getNumPlusMinus() << ' ' << x.getNumProduct() << endl;
     return x;
 }
 
